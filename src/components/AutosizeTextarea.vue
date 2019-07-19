@@ -30,7 +30,7 @@ export default {
     this.autoSize();
   },
   props: {
-    'parentMessage': {type: String, required: false},
+    'parentMessage': {type: String, required: true},
     'maxRow': {type: Number, required: false, default: 5},
     'width': {type: String, required: false, default: '100%'},
     'placeholder': {type: String, required: false, default: ''},
