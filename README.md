@@ -1,6 +1,6 @@
 # pretty-simple-autostextarea
 
-## [Demo](https://codesandbox.io/s/pretty-simple-autostextarea-rf23t)
+## [Demo](https://codesandbox.io/s/pretty-simple-autostextarea-hyo4c)
 
 ## Props
 | Name                  | Description                                                                                       |
