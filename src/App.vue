@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="wrap">
-      <AutosizeTextarea :parentMessage="textValue" v-model="textValue" :maxRow="3"/>
+      <AutosizeTextarea :parentMessage="textValue" v-model="textValue" :minRow="2" :maxRow="6"/>
       <div class="playground">
         <p>{{textValue}}</p>
         <button type="button" @click="appendText">Fetch some text</button>
