@@ -4,7 +4,7 @@
     ref="message"
     v-model="message"
     @input="handleInput"
-    rows="1"
+    :rows="minRow"
     class="hw-auto-textarea"
     :placeholder="placeholder"></textarea>
 </div>
@@ -31,6 +31,7 @@ export default {
   },
   props: {
     'parentMessage': {type: String, required: true},
+    'minRow': {type: Number, required: false, default: 1},
     'maxRow': {type: Number, required: false, default: 5},
     'width': {type: String, required: false, default: '100%'},
     'placeholder': {type: String, required: false, default: ''},
