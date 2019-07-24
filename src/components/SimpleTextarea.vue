@@ -2,7 +2,7 @@
 <div>
     <textarea
     ref="message"
-    v-model="message"
+    :value="parentMessage"
     @input="handleInput"
     :style="{width: `${width}`}"
     :rows="minRow"
@@ -19,14 +19,9 @@ import _ from "lodash"
 
 export default {
   name: 'simple-textarea',
-  data() {
-    return {
-      message: this.parentMessage,
-    }
-  },
   watch: {
     parentMessage(newVal) {
-      this.message = newVal;
+      this.$refs.message.value = newVal;
     }
   },
   updated() {
@@ -43,8 +38,7 @@ export default {
   },
   methods: {
     handleInput(e) {
-      this.message = e.target.value;
-      this.$emit('input', this.message);
+      this.$emit('input', e.target.value);
     },
     calcSize() {
       var el = this.$refs.message;
