@@ -4,8 +4,9 @@
     ref="message"
     v-model="message"
     @input="handleInput"
-    rows="1"
-    class="hw-auto-textarea"
+    :style="{width: `${width}`}"
+    :rows="minRow"
+    class="simple-textarea"
     :placeholder="placeholder"></textarea>
 </div>
 </template>
@@ -14,8 +15,10 @@
 const initScrollHeight = 21;
 const padding = 12; // border width(2) + vertical padding(5*2)
 
+import _ from "lodash"
+
 export default {
-  name: 'autosize-textarea',
+  name: 'simple-textarea',
   data() {
     return {
       message: this.parentMessage,
@@ -27,22 +30,25 @@ export default {
     }
   },
   updated() {
-    this.autoSize();
+    if(this.autosize || _.isObject(this.autosize)) {
+      this.calcSize();
+    }
   },
   props: {
-    'parentMessage': {type: String, required: true},
-    'maxRow': {type: Number, required: false, default: 5},
-    'width': {type: String, required: false, default: '100%'},
-    'placeholder': {type: String, required: false, default: ''},
+    parentMessage: {type: String, required: true},
+    placeholder: {type: String, required: false, default: ''},
+    width: {type: String, required: false, default: '100%'},
+    minRow: {type: Number, required: false, default: 5},
+    autosize: {type: [Boolean, Object], required: false, default: false}
   },
   methods: {
     handleInput(e) {
       this.message = e.target.value;
       this.$emit('input', this.message);
     },
-    autoSize() {
+    calcSize() {
       var el = this.$refs.message;
-      var maxHeight = initScrollHeight * this.maxRow + padding;
+      var maxHeight = initScrollHeight * (this.autosize.maxRow ? this.autosize.maxRow : this.minRow + 5) + padding;
 
       setTimeout(function(){
         if(el.scrollHeight < maxHeight) {
@@ -60,17 +66,17 @@ export default {
     // initialize width
     this.$refs.message.style.width = this.width;
 
-    this.autoSize();
+    if(this.autosize || _.isObject(this.autosize)) {
+      this.calcSize();
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.hw-auto-textarea {
+.simple-textarea {
   width: 100%;
-  height: 34px;
-  min-height:0;
-  overflow:hidden;
+  overflow: auto;
   resize: none;
   padding: 5px 10px;
   font-size: 14px;
