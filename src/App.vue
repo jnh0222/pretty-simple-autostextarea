@@ -8,6 +8,7 @@
       placeholder="Insert the text."
       :minRow="3"
       :autosize="{'maxRow': 10}"
+      simpleTextareaClass="simple-class"
       />
       <div class="playground">
         <p>{{textValue}}</p>

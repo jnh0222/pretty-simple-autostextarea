@@ -6,6 +6,7 @@
     @input="handleInput"
     :rows="minRow"
     class="simple-textarea"
+    :class="simpleTextareaClass"
     :placeholder="placeholder"></textarea>
 </div>
 </template>
@@ -33,7 +34,8 @@ export default {
     placeholder: {type: String, required: false, default: ''},
     width: {type: String, required: false, default: '100%'},
     minRow: {type: Number, required: false, default: 5},
-    autosize: {type: [Boolean, Object], required: false, default: false}
+    autosize: {type: [Boolean, Object], required: false, default: false},
+    simpleTextareaClass: {type: String, required: false, default: null}
   },
   methods: {
     handleInput(e) {
