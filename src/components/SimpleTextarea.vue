@@ -15,8 +15,6 @@
 const initScrollHeight = 21;
 const padding = 12; // border width(2) + vertical padding(5*2)
 
-import _ from "lodash"
-
 export default {
   name: 'simple-textarea',
   watch: {
@@ -25,7 +23,7 @@ export default {
     }
   },
   updated() {
-    if(this.autosize || _.isObject(this.autosize)) {
+    if(typeof this.autosize == 'boolean' || typeof this.autosize == 'object') {
       this.calcSize();
     }
   },
@@ -43,25 +41,36 @@ export default {
     },
     calcSize() {
       var el = this.$refs.message;
-      var maxHeight = initScrollHeight * (this.autosize.maxRow ? this.autosize.maxRow : this.minRow + 5) + padding;
 
-      setTimeout(function(){
-        if(el.scrollHeight < maxHeight) {
+      if(typeof this.autosize == 'boolean') {
+        setTimeout(function(){
           el.style.height = 'auto';
           el.style.height = `${el.scrollHeight + 3}px`;
           el.style.overflowY = 'hidden';
-        } else {
-          el.style.height = `${maxHeight}px`;
-          el.style.overflowY = 'scroll';
-        }
-      }, 0);
+        }, 0);
+      }
+      else if(typeof this.autosize == 'object') {
+        var maxHeight = initScrollHeight * (this.autosize.maxRow ? this.autosize.maxRow : this.minRow + 5) + padding;
+        
+        setTimeout(function(){
+          if(el.scrollHeight < maxHeight) {
+            el.style.height = 'auto';
+            el.style.height = `${el.scrollHeight + 3}px`;
+            el.style.overflowY = 'hidden';
+          } else {
+            el.style.height = `${maxHeight}px`;
+            el.style.overflowY = 'scroll';
+          }
+        }, 0);
+      }
+
     },
   },
   mounted() {
     // initialize width
     this.$refs.message.style.width = this.width;
 
-    if(this.autosize || _.isObject(this.autosize)) {
+    if(typeof this.autosize == 'boolean' || typeof this.autosize == 'object') {
       this.calcSize();
     }
   }

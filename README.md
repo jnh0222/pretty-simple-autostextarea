@@ -1,6 +1,6 @@
 # pretty-simple-autostextarea
 
-## [Demo](https://codesandbox.io/s/pretty-simple-autostextarea-hyo4c) 
+<!-- ## [Demo](https://codesandbox.io/s/pretty-simple-autostextarea-hyo4c)  -->
 &nbsp;
 
 
@@ -47,7 +47,8 @@ over 10, displays scrollbar.
 
 
 ### autosize - Boolean
-If autosize defined as true without specific value like following,
+If autosize defined as true without specific value like following, \
+the textarea will be expanded infinitely.
 ```
 <SimpleTextarea
 	:parentMessage="textValue"
@@ -55,4 +56,3 @@ If autosize defined as true without specific value like following,
 	:minRow="3"
 	autosize />
 ```
-8 is assigned to maxRow according to the internal rule, minRow + 5
