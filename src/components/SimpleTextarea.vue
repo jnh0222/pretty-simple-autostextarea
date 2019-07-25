@@ -4,7 +4,6 @@
     ref="message"
     :value="parentMessage"
     @input="handleInput"
-    :style="{width: `${width}`}"
     :rows="minRow"
     class="simple-textarea"
     :placeholder="placeholder"></textarea>
