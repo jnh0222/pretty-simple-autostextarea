@@ -7,8 +7,7 @@
         <SimpleTextarea
         :parentMessage="textValue1"
         v-model="textValue1"
-        placeholder="minRow: 5(default), maxRow: 10"
-        :autosize="{'maxRow': 10}"
+        placeholder="Default"
         simpleTextareaClass="simple-class"
         />
         <button type="button" class="btn-fetch" @click="appendText(1)">Fetch some text</button>
@@ -18,12 +17,23 @@
         <SimpleTextarea
         :parentMessage="textValue2"
         v-model="textValue2"
+        placeholder="minRow: 5(default), maxRow: 10"
+        :autosize="{'maxRow': 10}"
+        simpleTextareaClass="simple-class"
+        />
+        <button type="button" class="btn-fetch" @click="appendText(2)">Fetch some text</button>
+      </section>
+
+      <section class="item">
+        <SimpleTextarea
+        :parentMessage="textValue3"
+        v-model="textValue3"
         placeholder="minRow: 1"
         :minRow="1"
         autosize
         simpleTextareaClass="simple-class"
         />
-        <button type="button" class="btn-fetch" @click="appendText(2)">Fetch some text</button>
+        <button type="button" class="btn-fetch" @click="appendText(3)">Fetch some text</button>
       </section>
     </div>
   </div>
@@ -41,7 +51,8 @@ export default {
   data() {
     return {
       textValue1: '',
-      textValue2: ''
+      textValue2: '',
+      textValue3: ''
     }
   },
   methods: {

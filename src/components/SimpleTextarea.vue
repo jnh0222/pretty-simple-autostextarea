@@ -42,7 +42,7 @@ export default {
     calcSize() {
       var el = this.$refs.message;
 
-      if(typeof this.autosize == 'boolean') {
+      if(this.autosize === true) {
         setTimeout(function(){
           el.style.height = 'auto';
           el.style.height = `${el.scrollHeight + 3}px`;
