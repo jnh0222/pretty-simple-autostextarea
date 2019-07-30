@@ -3,7 +3,7 @@
     <textarea
     ref="message"
     :value="parentMessage"
-    @input="handleInput"
+    @input="$_handleInput"
     :rows="minRow"
     class="simple-textarea"
     :class="simpleTextareaClass"
@@ -12,9 +12,6 @@
 </template>
 
 <script>
-const initScrollHeight = 21;
-const padding = 12; // border width(2) + vertical padding(5*2)
-
 export default {
   name: 'simple-textarea',
   watch: {
@@ -24,7 +21,7 @@ export default {
   },
   updated() {
     if(typeof this.autosize == 'boolean' || typeof this.autosize == 'object') {
-      this.calcSize();
+      this.$_calcSize();
     }
   },
   props: {
@@ -35,49 +32,67 @@ export default {
     autosize: {type: [Boolean, Object], required: false, default: false},
     simpleTextareaClass: {type: String, required: false, default: null}
   },
+  data() {
+    return {
+      singleRowScrollHeight: null,
+      verticalPadding: 0,
+      verticalBorderWidth: 0,
+    }
+  },
   methods: {
-    handleInput(e) {
+    $_handleInput(e) {
       this.$emit('input', e.target.value);
     },
-    calcSize() {
+    $_calcSize() {
       var el = this.$refs.message;
 
       if(this.autosize === true) {
-        setTimeout(function(){
-          el.style.height = 'auto';
-          el.style.height = `${el.scrollHeight + 3}px`;
-          el.style.overflowY = 'hidden';
-        }, 0);
+        // infinite expansion
+        el.style.height = 'auto';
+        el.style.height = `${el.scrollHeight + this.verticalBorderWidth}px`;
+        el.style.overflowY = 'hidden';
       }
       else if(typeof this.autosize == 'object') {
-        var maxHeight = initScrollHeight * (this.autosize.maxRow ? this.autosize.maxRow : this.minRow + 5) + padding;
+        // expansion until maxHeight
+        var maxHeight = this.singleRowScrollHeight * (this.autosize.maxRow ? this.autosize.maxRow : this.minRow + 5) + this.verticalPadding + this.verticalBorderWidth;
         
-        setTimeout(function(){
-          if(el.scrollHeight < maxHeight) {
-            el.style.height = 'auto';
-            el.style.height = `${el.scrollHeight + 3}px`;
-            el.style.overflowY = 'hidden';
-          } else {
-            el.style.height = `${maxHeight}px`;
-            el.style.overflowY = 'scroll';
-          }
-        }, 0);
+        if(el.scrollHeight < maxHeight) {
+          el.style.height = 'auto';
+          el.style.height = `${el.scrollHeight + this.verticalBorderWidth}px`;
+          el.style.overflowY = 'hidden';
+        } else {
+          el.style.height = `${maxHeight}px`;
+          el.style.overflowY = 'scroll';
+        }
       }
-
     },
+    $_getSingleRowHeight() {
+      var singleRowTextarea = document.createElement('textarea');
+      singleRowTextarea.setAttribute('rows', 1);
+      singleRowTextarea.setAttribute('class', 'simple-textarea');
+      document.body.appendChild(singleRowTextarea);
+      return singleRowTextarea;
+    }
   },
   mounted() {
     // initialize width
     this.$refs.message.style.width = this.width;
+    
+    let singleRowTextarea = this.$_getSingleRowHeight();    
+    let computedStyles = window.getComputedStyle(singleRowTextarea);
+    this.verticalPadding = parseInt(computedStyles.getPropertyValue('padding-top')) + parseInt(computedStyles.getPropertyValue('padding-bottom'));
+    this.verticalBorderWidth = parseInt(computedStyles.getPropertyValue('border-top-width')) + parseInt(computedStyles.getPropertyValue('border-bottom-width'));
+    this.singleRowScrollHeight = singleRowTextarea.scrollHeight - this.verticalPadding;
+    singleRowTextarea.parentNode && singleRowTextarea.parentNode.removeChild(singleRowTextarea);
 
     if(typeof this.autosize == 'boolean' || typeof this.autosize == 'object') {
-      this.calcSize();
+      this.$_calcSize();
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .simple-textarea {
   width: 100%;
   overflow: auto;
@@ -86,5 +101,6 @@ export default {
   font-size: 14px;
   border: 1px solid #d6d6d6;
   transition-duration: .2s;
+  line-height: normal;
 }
 </style>
