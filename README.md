@@ -12,7 +12,7 @@
 | placeholder  | placeholder text. <br> default: ''|
 | width | Available units: % and px. <br> default: '100%' |
 | minRow | This means 'rows' of usual textarea. <br> default: 5 |
-| autosize | Defined as Boolean or Object, can expand its rows from minRow to maxRow(which is attribute of autosize Object). <br> Defined as true, default value of maxRow is minRow + 5. <br>default: false |
+| autosize | Defined as just 'true'(without any specific value), the textarea will be expanded infinitely.<br> Defined as Object, it can expand its rows from minRow to maxRow(which is attribute of autosize Object).<br>default: false |
 | simpleTextareaClass | custom class name. |
 
 
