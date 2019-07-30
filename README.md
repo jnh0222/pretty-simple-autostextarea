@@ -8,10 +8,10 @@
 
 | Name  | Description   |
 |--|--|
-| parentMessage  | String from parent. This initializes default value of textarea. This must equal to data binded v-model directive. <br> Required.  |
+| parentMessage  | String from parent. This initializes default value of textarea. This must equal to data binded v-model directive. <br> **Required**.  |
 | placeholder  | placeholder text. <br> default: ''|
 | width | Available units: % and px. <br> default: '100%' |
-| minRow | If autosize is defined as True or Object, minRow initializes number of rows not being displayed scrollbar. If not, minRow initializes 'rows' of usual textarea. <br> default: 5 |
+| minRow | This means 'rows' of usual textarea. <br> default: 5 |
 | autosize | Defined as Boolean or Object, can expand its rows from minRow to maxRow(which is attribute of autosize Object). <br> Defined as true, default value of maxRow is minRow + 5. <br>default: false |
 | simpleTextareaClass | custom class name. |
 

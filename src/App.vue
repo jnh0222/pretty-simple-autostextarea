@@ -17,8 +17,9 @@
         <SimpleTextarea
         :parentMessage="textValue2"
         v-model="textValue2"
-        placeholder="minRow: 5(default), maxRow: 10"
-        :autosize="{'maxRow': 10}"
+        placeholder="minRow: 1, maxRow: 4"
+        :minRow="1"
+        :autosize="{'maxRow': 4}"
         simpleTextareaClass="simple-class"
         />
         <button type="button" class="btn-fetch" @click="appendText(2)">Fetch some text</button>

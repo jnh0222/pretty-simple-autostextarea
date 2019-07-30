@@ -66,27 +66,30 @@ export default {
         }
       }
     },
-    $_getSingleRowHeight() {
+    $_getSingleRowHeight(cb) {
+      // create temporary instance
       var singleRowTextarea = document.createElement('textarea');
       singleRowTextarea.setAttribute('rows', 1);
       singleRowTextarea.setAttribute('class', 'simple-textarea');
       document.body.appendChild(singleRowTextarea);
-      return singleRowTextarea;
+
+      // extract styles and scrollHeight
+      let computedStyles = window.getComputedStyle(singleRowTextarea);
+      this.verticalPadding = parseInt(computedStyles.getPropertyValue('padding-top')) + parseInt(computedStyles.getPropertyValue('padding-bottom'));
+      this.verticalBorderWidth = parseInt(computedStyles.getPropertyValue('border-top-width')) + parseInt(computedStyles.getPropertyValue('border-bottom-width'));
+      this.singleRowScrollHeight = singleRowTextarea.scrollHeight - this.verticalPadding;
+
+      // remove the temporary instance
+      singleRowTextarea.parentNode && singleRowTextarea.parentNode.removeChild(singleRowTextarea);
+      if(cb) cb();
     }
   },
   mounted() {
     // initialize width
     this.$refs.message.style.width = this.width;
-    
-    let singleRowTextarea = this.$_getSingleRowHeight();    
-    let computedStyles = window.getComputedStyle(singleRowTextarea);
-    this.verticalPadding = parseInt(computedStyles.getPropertyValue('padding-top')) + parseInt(computedStyles.getPropertyValue('padding-bottom'));
-    this.verticalBorderWidth = parseInt(computedStyles.getPropertyValue('border-top-width')) + parseInt(computedStyles.getPropertyValue('border-bottom-width'));
-    this.singleRowScrollHeight = singleRowTextarea.scrollHeight - this.verticalPadding;
-    singleRowTextarea.parentNode && singleRowTextarea.parentNode.removeChild(singleRowTextarea);
 
     if(typeof this.autosize == 'boolean' || typeof this.autosize == 'object') {
-      this.$_calcSize();
+      this.$_getSingleRowHeight(this.$_calcSize);
     }
   }
 }
