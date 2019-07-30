@@ -1,6 +1,6 @@
 # pretty-simple-autostextarea
 
-## [Demo](https://codesandbox.io/s/github/jnh0222/pretty-simple-autostextarea/tree/v1.2.0)
+## [Demo](https://codesandbox.io/s/github/jnh0222/pretty-simple-autostextarea/tree/v1.2.0-updateLogic)
 &nbsp;
 
 
